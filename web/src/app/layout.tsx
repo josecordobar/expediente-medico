@@ -1,9 +1,6 @@
-"use client";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { usePathname } from "next/navigation";
-import AuthGuard from "@/components/AuthGuard";
-import Sidebar from "@/components/Sidebar";
+import AppShell from "@/components/AppShell";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -21,8 +18,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const pathname = usePathname();
-  const showSidebar = pathname !== "/login";
   return (
     <html lang="en">
       <head>
@@ -31,10 +26,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <AuthGuard>
-          {showSidebar && <Sidebar />}
-          <main className={showSidebar ? "ml-64" : "ml-0"}>{children}</main>
-        </AuthGuard>
+        <AppShell>{children}</AppShell>
       </body>
     </html>
   );
