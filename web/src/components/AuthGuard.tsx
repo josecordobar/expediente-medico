@@ -7,19 +7,25 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
   const [ready, setReady] = useState(false);
+  const [shouldRedirect, setShouldRedirect] = useState<{ to: string } | null>(null);
+
+  useEffect(() => {
+    if (shouldRedirect) {
+      router.replace(shouldRedirect.to);
+      setShouldRedirect(null);
+    }
+  }, [shouldRedirect, router]);
 
   useEffect(() => {
     const check = async () => {
       const { data } = await supabase.auth.getSession();
       const isLogin = pathname === "/login";
       if (!data.session && !isLogin) {
-        router.replace("/login");
-        setReady(true);
+        setShouldRedirect({ to: "/login" });
         return;
       }
       if (data.session && isLogin) {
-        router.replace("/pacientes");
-        setReady(true);
+        setShouldRedirect({ to: "/pacientes" });
         return;
       }
       setReady(true);
@@ -27,8 +33,8 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
     check();
     const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
       const isLogin = pathname === "/login";
-      if (!session && !isLogin) router.replace("/login");
-      if (session && isLogin) router.replace("/pacientes");
+      if (!session && !isLogin) setShouldRedirect({ to: "/login" });
+      if (session && isLogin) setShouldRedirect({ to: "/pacientes" });
     });
     return () => {
       sub.subscription.unsubscribe();
