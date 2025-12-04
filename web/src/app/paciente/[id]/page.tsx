@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import { useParams } from "next/navigation";
 
@@ -29,7 +29,7 @@ export default function Page() {
   const [detail, setDetail] = useState("");
   const [saving, setSaving] = useState(false);
 
-  const load = async () => {
+  const load = useCallback(async () => {
     setLoading(true);
     setError("");
     const { data: p, error: pe } = await supabase
@@ -47,11 +47,15 @@ export default function Page() {
     if (ce) setError(ce.message);
     setConsultations(c || []);
     setLoading(false);
-  };
+  }, [id]);
 
   useEffect(() => {
-    if (id) load();
-  }, [id]);
+    if (!id) return;
+    const handle = setTimeout(() => {
+      void load();
+    }, 0);
+    return () => clearTimeout(handle);
+  }, [id, load]);
 
   const addNote = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -88,8 +92,11 @@ export default function Page() {
         <h3 className="text-lg font-semibold text-sky-700 mb-3">Añadir Nota de Consulta</h3>
         <form onSubmit={addNote} className="space-y-3">
           <div>
-            <label className="block text-sm text-gray-700">Título</label>
+            <label htmlFor="note_title" className="block text-sm text-gray-700">Título</label>
             <input
+              id="note_title"
+              title="Título de la nota"
+              placeholder="Ingresa el título de la consulta"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               className="mt-1 w-full rounded border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-300"
@@ -97,8 +104,11 @@ export default function Page() {
             />
           </div>
           <div>
-            <label className="block text-sm text-gray-700">Detalle</label>
+            <label htmlFor="note_detail" className="block text-sm text-gray-700">Detalle</label>
             <textarea
+              id="note_detail"
+              title="Detalle de la nota"
+              placeholder="Describe la consulta"
               value={detail}
               onChange={(e) => setDetail(e.target.value)}
               className="mt-1 w-full rounded border border-gray-300 px-3 py-2 h-28 focus:outline-none focus:ring-2 focus:ring-sky-300"

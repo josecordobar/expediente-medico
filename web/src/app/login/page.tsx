@@ -23,8 +23,11 @@ export default function Page() {
         <h1 className="text-xl font-semibold text-sky-700 mb-4">Ingreso</h1>
         <div className="space-y-3">
           <div>
-            <label className="block text-sm text-gray-700">Correo</label>
+            <label htmlFor="email" className="block text-sm text-gray-700">Correo</label>
             <input
+              id="email"
+              title="Correo"
+              placeholder="Ingresa tu correo"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -33,8 +36,11 @@ export default function Page() {
             />
           </div>
           <div>
-            <label className="block text-sm text-gray-700">Contraseña</label>
+            <label htmlFor="password" className="block text-sm text-gray-700">Contraseña</label>
             <input
+              id="password"
+              title="Contraseña"
+              placeholder="Ingresa tu contraseña"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}

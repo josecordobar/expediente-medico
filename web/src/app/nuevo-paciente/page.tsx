@@ -40,8 +40,11 @@ export default function Page() {
       <h1 className="text-2xl font-semibold text-sky-700 mb-4">Nuevo Paciente</h1>
       <form onSubmit={onSubmit} className="space-y-4">
         <div>
-          <label className="block text-sm text-gray-700">Nombre Completo</label>
+          <label htmlFor="full_name" className="block text-sm text-gray-700">Nombre Completo</label>
           <input
+            id="full_name"
+            title="Nombre Completo"
+            placeholder="Ingresa el nombre completo"
             value={full_name}
             onChange={(e) => setFullName(e.target.value)}
             className="mt-1 w-full rounded border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-300"
@@ -49,8 +52,10 @@ export default function Page() {
           />
         </div>
         <div>
-          <label className="block text-sm text-gray-700">Fecha de Nacimiento</label>
+          <label htmlFor="birth_date" className="block text-sm text-gray-700">Fecha de Nacimiento</label>
           <input
+            id="birth_date"
+            title="Fecha de Nacimiento"
             type="date"
             value={birth_date}
             onChange={(e) => setBirthDate(e.target.value)}
@@ -59,8 +64,11 @@ export default function Page() {
           />
         </div>
         <div>
-          <label className="block text-sm text-gray-700">Número de Teléfono</label>
+          <label htmlFor="phone" className="block text-sm text-gray-700">Número de Teléfono</label>
           <input
+            id="phone"
+            title="Número de Teléfono"
+            placeholder="Ingresa el número de teléfono"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             className="mt-1 w-full rounded border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-300"
@@ -68,8 +76,11 @@ export default function Page() {
           />
         </div>
         <div>
-          <label className="block text-sm text-gray-700">Cédula/ID</label>
+          <label htmlFor="cedula" className="block text-sm text-gray-700">Cédula/ID</label>
           <input
+            id="cedula"
+            title="Cédula/ID"
+            placeholder="Ingresa la cédula o ID"
             value={cedula}
             onChange={(e) => setCedula(e.target.value)}
             className="mt-1 w-full rounded border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-300"

@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import Link from "next/link";
 import { supabase } from "@/lib/supabaseClient";
 
@@ -17,7 +17,7 @@ export default function Page() {
   const [error, setError] = useState("");
   const [q, setQ] = useState("");
 
-  const fetchPatients = async (term?: string) => {
+  const fetchPatients = useCallback(async (term?: string) => {
     setLoading(true);
     setError("");
     let query = supabase.from("patients").select("id, full_name, birth_date, phone, cedula").order("full_name");
@@ -30,20 +30,23 @@ export default function Page() {
     if (err) setError(err.message);
     setPatients(data || []);
     setLoading(false);
-  };
+  }, []);
 
   useEffect(() => {
-    fetchPatients();
-  }, []);
+    const handle = setTimeout(() => {
+      void fetchPatients();
+    }, 0);
+    return () => clearTimeout(handle);
+  }, [fetchPatients]);
 
-  const onSearch = useMemo(() => {
-    let t: any;
-    return (value: string) => {
-      setQ(value);
-      clearTimeout(t);
-      t = setTimeout(() => fetchPatients(value), 300);
-    };
-  }, []);
+  const timer = useRef<number | null>(null);
+  const onSearch = useCallback((value: string) => {
+    setQ(value);
+    if (timer.current) clearTimeout(timer.current);
+    timer.current = window.setTimeout(() => {
+      fetchPatients(value);
+    }, 300);
+  }, [fetchPatients]);
 
   return (
     <div className="p-6">

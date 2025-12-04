@@ -20,13 +20,13 @@ export default function Sidebar() {
             key={i.href}
             href={i.href}
             className={`block rounded px-3 py-2 ${
-              pathname === i.href ? "bg-sky-100 text-sky-800" : "text-gray-700 hover:bg-gray-100"
+              pathname === i.href ? "bg-sky-100 text-sky-800" : "text-gray-700 hover:bg-sky-50"
             }`}
           >
             {i.label}
           </Link>
         ))}
-        <Link href="/logout" className="block rounded px-3 py-2 text-gray-700 hover:bg-gray-100">
+        <Link href="/logout" className="block rounded px-3 py-2 text-gray-700 hover:bg-sky-50">
           Salir
         </Link>
       </nav>
