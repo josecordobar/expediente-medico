@@ -1,16 +1,14 @@
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import AppShell from "@/components/AppShell";
 
-const geistSans = Geist({
+// Fuentes locales para compatibilidad con Next.js 14
+const geistSans = {
   variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+};
 
-const geistMono = Geist_Mono({
+const geistMono = {
   variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+};
 
 
 export default function RootLayout({
@@ -23,9 +21,7 @@ export default function RootLayout({
       <head>
         <title>Gestion Expedientes Medicos</title>
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className="antialiased">
         <AppShell>{children}</AppShell>
       </body>
     </html>

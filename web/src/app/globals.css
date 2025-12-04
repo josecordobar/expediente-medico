@@ -14,8 +14,8 @@
   --color-primary: var(--primary);
   --color-primary-600: var(--primary-600);
   --color-muted: var(--muted);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  --font-mono: ui-monospace, "Cascadia Mono", "Segoe UI Mono", "Roboto Mono", "Ubuntu Mono", "Liberation Mono", "Menlo", "Monaco", "Consolas", monospace;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -28,5 +28,5 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  font-family: var(--font-sans);
 }
